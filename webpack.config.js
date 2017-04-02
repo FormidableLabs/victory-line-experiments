@@ -2,6 +2,7 @@
 
 var path = require("path");
 var webpack = require("webpack");
+var BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 var LodashModuleReplacementPlugin = require("lodash-webpack-plugin");
 
 // Need to resolve to the **directory** of `src`.
@@ -62,6 +63,7 @@ module.exports = {
         comments: true  // DEMO ONLY: Helpful comments
       },
       sourceMap: false
-    })
+    }),
+    new BundleAnalyzerPlugin()
   ]
 };
