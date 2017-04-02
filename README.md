@@ -18,12 +18,20 @@ hacks an approximation use Webpack magic.
 ```sh
 # Just build
 $ yarn run build
+$ du -sh dist/*
+416K  dist/main.js
+
+# Do custom minification that's actually readable while still doing DCE
+# so you can inspect `dist.main.js` to look for tree shaking (`unused` comments).
+$ DEMO=true yarn run build
+$ du -sh dist/*
+1.4M  dist/main.js
 
 # With bundle analyzer
 $ ANALYZE=true yarn run build
 ```
 
-Output sample:
+Demo output sample:
 
 ```sh
 Hash: a7d5f3265b3fae48520d

@@ -10,8 +10,11 @@ var resolveSrc = function (mod) {
   return path.join( path.dirname(require.resolve(mod + "/package.json")), "src");
 };
 
+// Need to babel process both `victory-core` and `victory-chart` and alias.
 var victoryCoreSrc = resolveSrc("victory-core");
 var victoryChartSrc = resolveSrc("victory-chart");
+
+var IS_DEMO = process.env.DEMO === "true";
 
 module.exports = {
   context: path.resolve("src"),
@@ -38,6 +41,7 @@ module.exports = {
   },
   resolve: {
     alias: {
+      "victory-chart": victoryChartSrc,
       "victory-core": victoryCoreSrc
     }
   },
@@ -60,10 +64,10 @@ module.exports = {
     }),
     new webpack.optimize.UglifyJsPlugin({
       compress: true,
-      mangle: false,    // DEMO ONLY: Don't change variable names.
-      beautify: true,   // DEMO ONLY: Preserve whitespace
+      mangle: !IS_DEMO,    // DEMO ONLY: Don't change variable names.
+      beautify: IS_DEMO,   // DEMO ONLY: Preserve whitespace
       output: {
-        comments: true  // DEMO ONLY: Helpful comments
+        comments: IS_DEMO  // DEMO ONLY: Helpful comments
       },
       sourceMap: false
     })
