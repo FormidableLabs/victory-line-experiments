@@ -2,6 +2,7 @@
 
 var path = require("path");
 var webpack = require("webpack");
+var LodashModuleReplacementPlugin = require("lodash-webpack-plugin");
 
 // Need to resolve to the **directory** of `src`.
 var victoryCoreSrc = path.join(
@@ -41,6 +42,13 @@ module.exports = {
       'process.env': {
         NODE_ENV: JSON.stringify("production"),
       }
+    }),
+    new LodashModuleReplacementPlugin({
+      "currying": true,
+      "flattening": true,
+      "paths": true,
+      "placeholders": true,
+      "shorthands": true
     }),
     new webpack.LoaderOptionsPlugin({
       minimize: true,
