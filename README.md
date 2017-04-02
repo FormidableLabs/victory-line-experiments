@@ -13,8 +13,6 @@ hacks an approximation use Webpack magic.
 
 ## Building
 
-**Status**: _Builds_
-
 ```sh
 # Just build
 $ yarn run build
