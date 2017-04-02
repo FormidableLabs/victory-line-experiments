@@ -1,16 +1,10 @@
 {
   "presets": [
-    "react",
-    [
-      "es2015",
-      {
-        "modules": false
-      }
-    ]
+    ["es2015", {"modules": false}],
+    "stage-2",
+    "react"
   ],
   "plugins": [
-    "lodash",
-    "transform-class-properties",
-    "transform-object-rest-spread"
+    "lodash"
   ]
 }

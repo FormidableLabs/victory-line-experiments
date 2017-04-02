@@ -47,3 +47,6 @@ jspm_packages
 dist
 
 yarn.lock
+
+###IDE###
+.idea/
