@@ -6,10 +6,12 @@ var BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlug
 var LodashModuleReplacementPlugin = require("lodash-webpack-plugin");
 
 // Need to resolve to the **directory** of `src`.
-var victoryCoreSrc = path.join(
-  path.dirname(require.resolve("victory-core/package.json")),
-  "src"
-);
+var resolveSrc = function (mod) {
+  return path.join( path.dirname(require.resolve(mod + "/package.json")), "src");
+};
+
+var victoryCoreSrc = resolveSrc("victory-core");
+var victoryChartSrc = resolveSrc("victory-chart");
 
 module.exports = {
   context: path.resolve("src"),
@@ -27,7 +29,8 @@ module.exports = {
         test: /\.js$/,
         include: [
           path.resolve("src"),
-          victoryCoreSrc
+          victoryCoreSrc,
+          victoryChartSrc
         ],
         loader: "babel-loader"
       }
@@ -63,7 +66,8 @@ module.exports = {
         comments: true  // DEMO ONLY: Helpful comments
       },
       sourceMap: false
-    }),
-    new BundleAnalyzerPlugin()
-  ]
+    })
+  ].concat(
+    process.env.ANALYZE === "true" ? new BundleAnalyzerPlugin() : []
+  )
 };
