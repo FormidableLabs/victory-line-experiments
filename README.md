@@ -11,19 +11,21 @@ lose tree shaking capabilities until we for reals get to
 [ticket #256](https://github.com/FormidableLabs/victory/issues/256). This repo
 hacks an approximation use Webpack magic.
 
+Spurred out of a discussion on [victory/#547](https://github.com/FormidableLabs/victory/issues/547)
+
 ## Building
 
 ```sh
 # Just build
 $ yarn run build
-$ du -sh dist/*
-416K  dist/main.js
+$ wc -c dist/main.js
+  423242 dist/main.js
 
 # Do custom minification that's actually readable while still doing DCE
 # so you can inspect `dist.main.js` to look for tree shaking (`unused` comments).
 $ DEMO=true yarn run build
-$ du -sh dist/*
-1.4M  dist/main.js
+$ $ wc -c dist/main.js
+ 1444628 dist/main.js
 
 # With bundle analyzer
 $ ANALYZE=true yarn run build

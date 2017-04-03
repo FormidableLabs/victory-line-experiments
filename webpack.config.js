@@ -6,8 +6,11 @@ var BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlug
 var LodashModuleReplacementPlugin = require("lodash-webpack-plugin");
 
 // Need to resolve to the **directory** of `src`.
+//
+// Use heuristic of knowing `package.json` _must_ be at a predictable root
+// location.
 var resolveSrc = function (mod) {
-  return path.join( path.dirname(require.resolve(mod + "/package.json")), "src");
+  return path.join(path.dirname(require.resolve(mod + "/package.json")), "src");
 };
 
 // Need to babel process both `victory-core` and `victory-chart` and alias.
@@ -32,6 +35,7 @@ module.exports = {
         test: /\.js$/,
         include: [
           path.resolve("src"),
+          // Babel parse the victory sources.
           victoryCoreSrc,
           victoryChartSrc
         ],
@@ -41,6 +45,7 @@ module.exports = {
   },
   resolve: {
     alias: {
+      // Force use of es6 src instead of es5 lib
       "victory-chart": victoryChartSrc,
       "victory-core": victoryCoreSrc
     }
