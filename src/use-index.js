@@ -1,3 +1,4 @@
+// Use the full index with all re-exported components.
 import { VictoryLine } from "victory-chart";
 
 export default render = () => (

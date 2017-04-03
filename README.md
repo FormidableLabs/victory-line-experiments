@@ -13,25 +13,105 @@ hacks an approximation use Webpack magic.
 
 Spurred out of a discussion on [victory/#547](https://github.com/FormidableLabs/victory/issues/547)
 
+## The Two Builds
+
+We have two entry points that only differ in:
+
+```js
+// use-index.js
+// Use the full index with all re-exported components.
+import { VictoryLine } from "victory-chart";
+```
+
+and
+
+```js
+// one-off-import.js
+// Go straight off of the full path to the individual component.
+import VictoryLine from "victory-chart/components/victory-line/victory-line";
+```
+
 ## Building
 
 ```sh
 # Just build
 $ yarn run build
-$ wc -c dist/main.js
-  423242 dist/main.js
+$ wc -c dist/*
+  272236 dist/one-off-import.js
+  423242 dist/use-index.js
 
 # Do custom minification that's actually readable while still doing DCE
 # so you can inspect `dist.main.js` to look for tree shaking (`unused` comments).
 $ DEMO=true yarn run build
-$ $ wc -c dist/main.js
- 1444628 dist/main.js
+$ $ wc -c dist/*
+  970001 dist/one-off-import.js
+ 1444699 dist/use-index.js
 
 # With bundle analyzer
 $ ANALYZE=true yarn run build
 ```
 
-Demo output sample:
+## Analysis - One Off vs. Using Index
+
+There is a significant different in size:
+
+* one-off-import.js: `272 KB`
+* use-index.js: `423 KB`
+
+Diffing a demo build (which is human readable) and some random information:
+
+```sh
+$ colordiff -Naur dist/one-off-import.js dist/use-index.js
+```
+
+### `victory-core/src/victory-primitives/index.js`
+
+The `use-index` version exports  the following additional components not
+exported by `one-off-import`:
+
+- `Candle`
+- `Voronoi`
+- `ErrorBar`
+- `Point`
+- `Bar`
+- `Area`
+- `Line
+
+diff:
+
+```
+-}, /* 61 */
++}, /* 77 */
+ /* exports provided: Area, Bar, Candle, ClipPath, Curve, ErrorBar, Line, Point, Slice, Voronoi, Flyout */
+-/* exports used: Curve, Flyout, ClipPath */
++/* exports used: Flyout, ClipPath, Candle, Voronoi, ErrorBar, Point, Bar, Area, Line, Curve */
+ /*!*********************************************************!*\
+   !*** ../~/victory-core/src/victory-primitives/index.js ***!
+   \*********************************************************/
+
+```
+
+Looking just to `Candle` (`victory-core/src/victory-primitives/candle.js`,
+index: 200 in `one-off`), there **is** a problem with tree-shaking. Namely, that
+even in the one-off version, this code is detected as unused, but we still get
+the `require` for it:
+
+```js
+__webpack_require__(/*! ./candle */ 200)
+```
+
+and the underlying source is present at index `200`.
+
+The `use-index` build has an even greater cascading effect of this problem.
+
+Upon further research, all of this runs up against what appears to be a
+long-standing bug for webpack --
+[webpack/#2867](https://github.com/webpack/webpack/issues/2867) --
+`Tree shaking completely broken?`
+
+## Sample webpack output
+
+Demo output sample of `use-index.js`:
 
 ```sh
 Hash: a7d5f3265b3fae48520d
