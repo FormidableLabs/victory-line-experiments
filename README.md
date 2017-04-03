@@ -75,7 +75,7 @@ above file the following additional components not exported by `one-off-import`:
 - `Point`
 - `Bar`
 - `Area`
-- `Line
+- `Line`
 
 diff:
 
@@ -105,9 +105,15 @@ and the underlying source is present at index `200`.
 The `use-index` build has an even greater cascading effect of this problem.
 
 Upon further research, all of this runs up against what appears to be a
-long-standing bug for webpack --
-[webpack/#2867](https://github.com/webpack/webpack/issues/2867) --
-`Tree shaking completely broken?`
+long-standing bugs for webpack:
+
+* [webpack/#2867](https://github.com/webpack/webpack/issues/2867):
+  `Tree shaking completely broken?`
+* [webpack/#1750](https://github.com/webpack/webpack/issues/1750):
+  `tree-shaking with lodash-es`
+
+Best synopsis of observed issue so far:
+https://github.com/webpack/webpack/issues/1750#issuecomment-251372813
 
 ## Sample webpack output
 
