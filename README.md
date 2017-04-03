@@ -18,7 +18,7 @@ Related other tickets:
 * [victory#549](https://github.com/FormidableLabs/victory/issues/549):
   Webpack tree shaking does not completely remove unused re-exports
 * [victory#548](https://github.com/FormidableLabs/victory/issues/548):
-  https://github.com/FormidableLabs/victory/issues/548
+  Provide efficient webpack helpers for tree-shaking + DCE
 
 ## The Two Builds
 
