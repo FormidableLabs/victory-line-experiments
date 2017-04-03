@@ -8,7 +8,7 @@ Various Webpack configuration hacking for an efficient, terse app bundle with
 
 Victory builds to ES5 `lib` which is pointed to in `package.json:main` so we
 lose tree shaking capabilities until we for reals get to
-[ticket #256](https://github.com/FormidableLabs/victory/issues/256). This repo
+[victory#256](https://github.com/FormidableLabs/victory/issues/256). This repo
 hacks an approximation use Webpack magic.
 
 Related other tickets:
