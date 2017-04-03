@@ -11,7 +11,14 @@ lose tree shaking capabilities until we for reals get to
 [ticket #256](https://github.com/FormidableLabs/victory/issues/256). This repo
 hacks an approximation use Webpack magic.
 
-Spurred out of a discussion on [victory/#547](https://github.com/FormidableLabs/victory/issues/547)
+Related other tickets:
+
+* [victory#547](https://github.com/FormidableLabs/victory/issues/547):
+  Original discussion spurring this repo.
+* [victory#549](https://github.com/FormidableLabs/victory/issues/549):
+  Webpack tree shaking does not completely remove unused re-exports
+* [victory#548](https://github.com/FormidableLabs/victory/issues/548):
+  https://github.com/FormidableLabs/victory/issues/548
 
 ## The Two Builds
 
@@ -79,7 +86,7 @@ above file the following additional components not exported by `one-off-import`:
 
 diff:
 
-```
+```diff
 -}, /* 61 */
 +}, /* 77 */
  /* exports provided: Area, Bar, Candle, ClipPath, Curve, ErrorBar, Line, Point, Slice, Voronoi, Flyout */
@@ -107,9 +114,9 @@ The `use-index` build has an even greater cascading effect of this problem.
 Upon further research, all of this runs up against what appears to be a
 long-standing bugs for webpack:
 
-* [webpack/#2867](https://github.com/webpack/webpack/issues/2867):
+* [webpack#2867](https://github.com/webpack/webpack/issues/2867):
   `Tree shaking completely broken?`
-* [webpack/#1750](https://github.com/webpack/webpack/issues/1750):
+* [webpack#1750](https://github.com/webpack/webpack/issues/1750):
   `tree-shaking with lodash-es`
 
 Best synopsis of observed issue so far:
