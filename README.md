@@ -66,8 +66,8 @@ $ colordiff -Naur dist/one-off-import.js dist/use-index.js
 
 ### `victory-core/src/victory-primitives/index.js`
 
-The `use-index` version exports  the following additional components not
-exported by `one-off-import`:
+Just picking one example on a quick skim, the `use-index` version exports of the
+above file the following additional components not exported by `one-off-import`:
 
 - `Candle`
 - `Voronoi`
