@@ -49,9 +49,25 @@ $ wc -c dist/*
 # Do custom minification that's actually readable while still doing DCE
 # so you can inspect `dist.main.js` to look for tree shaking (`unused` comments).
 $ DEMO=true yarn run build
-$ $ wc -c dist/*
+$ wc -c dist/*
  1050848 dist/one-off-import.js
  1597913 dist/use-index.js
+```
+
+Here's current for `webpack@4`:
+
+```sh
+# Just build
+$ yarn run build
+$ wc -c dist/*
+  212245 dist/one-off-import.js
+  212289 dist/use-index.js
+
+# Demo version.
+$ DEMO=true yarn run build
+$ wc -c dist/*
+  796586 dist/one-off-import.js
+  796837 dist/use-index.js
 ```
 
 ## Analysis - One Off vs. Using Index

@@ -3,6 +3,7 @@
 var path = require("path");
 var webpack = require("webpack");
 var LodashModuleReplacementPlugin = require("lodash-webpack-plugin");
+var UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 
 var IS_DEMO = process.env.DEMO === "true";
 
@@ -16,6 +17,7 @@ var ENTRY_POINTS = [
 ];
 
 module.exports = ENTRY_POINTS.map((name) => ({
+  mode: IS_DEMO ? "development" : "production",
   context: path.resolve("src"),
   entry: {
     [name]: "./" + name + ".js"
@@ -24,6 +26,10 @@ module.exports = ENTRY_POINTS.map((name) => ({
     path: path.resolve("dist"),
     filename: "[name].js",
     pathinfo: true
+  },
+  devtool: false,
+  optimization: {
+    sideEffects: true
   },
   plugins: [
     new webpack.DefinePlugin({
@@ -42,12 +48,14 @@ module.exports = ENTRY_POINTS.map((name) => ({
       minimize: true,
       debug: false
     }),
-    new webpack.optimize.UglifyJsPlugin({
-      compress: true,
-      mangle: !IS_DEMO,       // DEMO ONLY: Don't change variable names.
-      beautify: IS_DEMO,      // DEMO ONLY: Preserve whitespace
-      output: {
-        comments: IS_DEMO     // DEMO ONLY: Helpful comments
+    new UglifyJsPlugin({
+      uglifyOptions: {
+        compress: true,
+        mangle: !IS_DEMO,       // DEMO ONLY: Don't change variable names.
+        beautify: IS_DEMO,      // DEMO ONLY: Preserve whitespace
+        output: {
+          comments: IS_DEMO     // DEMO ONLY: Helpful comments
+        }
       },
       sourceMap: false
     })
