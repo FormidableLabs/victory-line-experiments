@@ -2,7 +2,7 @@ VictoryLine Experiments
 =======================
 
 Various Webpack configuration hacking for an efficient, terse app bundle with
-`VictoryLine` from `victory-charts`.
+`VictoryLine` from `victory`.
 
 ## Background
 
