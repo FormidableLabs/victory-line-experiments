@@ -4,6 +4,7 @@ var path = require("path");
 var webpack = require("webpack");
 var LodashModuleReplacementPlugin = require("lodash-webpack-plugin");
 
+var IS_DEMO = process.env.DEMO === "true";
 
 // Entry points.
 // **Note**: Need an _array_ of configuration objects with one entry point
@@ -43,10 +44,10 @@ module.exports = ENTRY_POINTS.map((name) => ({
     }),
     new webpack.optimize.UglifyJsPlugin({
       compress: true,
-      mangle: false,       // DEMO ONLY: Don't change variable names.
-      beautify: true,      // DEMO ONLY: Preserve whitespace
+      mangle: !IS_DEMO,       // DEMO ONLY: Don't change variable names.
+      beautify: IS_DEMO,      // DEMO ONLY: Preserve whitespace
       output: {
-        comments: true     // DEMO ONLY: Helpful comments
+        comments: IS_DEMO     // DEMO ONLY: Helpful comments
       },
       sourceMap: false
     })
