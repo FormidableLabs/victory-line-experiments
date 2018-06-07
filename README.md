@@ -37,42 +37,24 @@ import VictoryLine from "victory-chart/es/components/victory-line/victory-line";
 
 ## Building
 
-Here's current for `webpack@3`:
-
-```sh
-# Just build
-$ yarn run build
-$ wc -c dist/*
-  296629 dist/one-off-import.js
-  460275 dist/use-index.js
-
-# Do custom minification that's actually readable while still doing DCE
-# so you can inspect `dist.main.js` to look for tree shaking (`unused` comments).
-$ DEMO=true yarn run build
-$ wc -c dist/*
- 1050848 dist/one-off-import.js
- 1597913 dist/use-index.js
-```
-
 Here's current for `webpack@4`:
 
 ```sh
 # Just build
 $ yarn run build
-$ wc -c dist/*
-  212245 dist/one-off-import.js
-  212289 dist/use-index.js
 
-# Demo version.
-$ DEMO=true yarn run build
-$ wc -c dist/*
-  796586 dist/one-off-import.js
-  796837 dist/use-index.js
+# produciton
+$ wc -c dist/*{index,import}.min.js
+  248226 dist/use-index.min.js
+  248232 dist/one-off-import.min.js
+
+# development (with sideEffects optimizations on.)
+$ wc -c dist/*{index,import}.js
+  888503 dist/use-index.js
+  888676 dist/one-off-import.js
+
 ```
 
 ## Analysis - One Off vs. Using Index
 
-There is a significant different in size for `webpack@3`:
-
-* one-off-import.js: `296 KB`
-* use-index.js: `460 KB`
+Everything's the same. Yay!
