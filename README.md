@@ -43,7 +43,7 @@ Here's current for `webpack@4`:
 # Just build
 $ yarn run build
 
-# produciton
+# production
 $ wc -c dist/*{index,import}.min.js
   248226 dist/use-index.min.js
   248232 dist/one-off-import.min.js
